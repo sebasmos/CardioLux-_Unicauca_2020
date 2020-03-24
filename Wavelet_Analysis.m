@@ -27,4 +27,5 @@ function Wavelet_Analysis(data)
             grid on, axis([0 50 -10 150 ])
           
     end
+    disp("listo")
 end
