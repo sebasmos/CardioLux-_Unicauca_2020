@@ -1,0 +1,1 @@
+"# 12ECG_Challenge_Unicauca_2020"  initgit add README.mdgit commit -m "first commit"git remote add origin git@github.com:sebasmos/12ECG_Challenge_Unicauca_2020.gitgit push -u origin master                
