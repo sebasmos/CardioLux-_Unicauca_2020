@@ -2,7 +2,7 @@ function features = get_12ECG_features(data, header_data)
        % Add additional features here
        
        % addfunction path needed
-        addpath(genpath('Tools/'))
+        addpath(genpath('../datasets/Tools/'))
         load('HRVparams_12ECG','HRVparams')
 
 	% read number of leads, sample frequency and gain from the header.	
