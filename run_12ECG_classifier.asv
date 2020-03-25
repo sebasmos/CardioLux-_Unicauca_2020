@@ -16,7 +16,7 @@ function [score, label] = run_12ECG_classifier(data,header_data,classes, model,k
         end
     %% Fourier Analysis 
     % Fourier_Analysis(data);
-    % Fourier_Analysis_Gnral(data); -Verificar cambiando valores
+     Fourier_Analysis_Gnral(Constructed_Signal); %- Verificar cambiando valores
     %% Wavelets Analysis  
 %     Wavelet_Analysis(data,k);
     %% Features extraction
