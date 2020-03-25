@@ -16,9 +16,11 @@ function [score, label] = run_12ECG_classifier(data,header_data,classes, model,k
         end
     %% Fourier Analysis 
     % Fourier_Analysis(data);
+    % Fourier_Analysis_Gnral(data); -Verificar cambiando valores
     %% Wavelets Analysis  
 %     Wavelet_Analysis(data,k);
-    %%
+    %% Features extraction
+    % [ ecg ] = ecg_noisecancellation( data, 500 );
     % Use your classifier here to obtain a label and score for each class.
     features = get_12ECG_features(FilteredData,header_data);
     
