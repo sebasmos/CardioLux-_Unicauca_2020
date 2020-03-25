@@ -1,5 +1,18 @@
-function Wavelet_Analysis(data)
-
+function Wavelet_Analysis(data,k)
+   
+    %% ANALYSIS USING SPECTROGRAM
+    figure
+    for i=1:12
+        subplot(2,1,1)        
+        title(['Lead number ',num2str(i)])
+        spectrogram(data(i,:),[],[],[],500,'yaxis'),
+        subplot(2,1,2)
+        plot(data(i,:)), 
+        ylabel('Magnitude'),xlabel('Time')
+    end
+    
+    
+    %% ANALYSUS USING WAVELETS
     for i=1:12
         % % Denoising wavelet using db 8 at 3 levels of decomposition/reconstruction
             [C,L] = wavedec(data(i,:),3,'sym6');  
@@ -24,8 +37,6 @@ function Wavelet_Analysis(data)
             plot(f2,dP), xlabel('Frequency(Hz)')
             legend('Signal')
             title('FORMA 3: PowSpect');
-            grid on, axis([0 50 -10 150 ])
-          
+            grid on, axis([0 50 -10 150 ])          
     end
-    disp("listo")
 end
