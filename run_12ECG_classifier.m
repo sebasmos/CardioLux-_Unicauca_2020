@@ -12,7 +12,9 @@ function [score, label] = run_12ECG_classifier(data,header_data,classes, model,k
 %     FilteredData = FilteredData';
         for i =1:12
                 %% wavelets without thresholding
-%               [C,L] = wavedec(data(i,:),3,'sym6');  
+%                [C,L] = wavedec(data(i,:),2,'sym4');  
+                 % approx = appcoef(L,C,'sym4');
+                 % [cd1,cd2,cd3] = detcoef(C,L,[1 2 3]);
 %               Constructed_Signal(i,:) = wrcoef('a',C,L,'sym6',3);
                 %% Denoising wavelet using thresholding and N decom/construnction levels
                 % [C,L] = wavedec(data(i,:),4,'db10'); 
@@ -23,7 +25,7 @@ function [score, label] = run_12ECG_classifier(data,header_data,classes, model,k
 %               cleanedSignal = emd_dfadenoising (data);
 %               Constructed_Signal(i,:) = cleanedSignal(i,:)';
                 %% Smoothing using Savitzky
-                Constructed_Signal(i,:) = sgolayfilt(data(i,:),3,41);
+                Constructed_Signal(i,:) = sgolayfilt(data(i,:),3,25);
                 % Denoising stage using moving median smoothing filter
 %                 A3  = movmedian(Araw,11);
 %                 cleanedSignal = detrend(A3);%consider using detrending?
