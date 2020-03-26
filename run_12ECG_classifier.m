@@ -11,8 +11,9 @@ function [score, label] = run_12ECG_classifier(data,header_data,classes, model,k
 %     FilteredData = filtering(data,0.005,55,500,1);
 %     FilteredData = FilteredData';
         for i =1:12
-              [C,L] = wavedec(data(i,:),3,'sym6');  
-              Constructed_Signal(i,:) = wrcoef('a',C,L,'sym6',3);
+%               [C,L] = wavedec(data(i,:),3,'sym6');  
+%               Constructed_Signal(i,:) = wrcoef('a',C,L,'sym6',3);
+                Constructed_Signal(i,:) = sgolayfilt(data(i,:),3,41);
         end
     %% Fourier Analysis 
     % Fourier_Analysis(data);
@@ -25,7 +26,7 @@ function [score, label] = run_12ECG_classifier(data,header_data,classes, model,k
     %% Features extraction
 %     [ P_index, Q_index, R_index, S_index, T_index] = ecg_points( Constructed_Signal, 500 );
     % Use your classifier here to obtain a label and score for each class.
-    features = get_12ECG_features(data,header_data);
+    features = get_12ECG_features(Constructed_Signal,header_data);
     
     %% Signal plot
 %      subplot(5,2,k);
