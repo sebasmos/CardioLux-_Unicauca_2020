@@ -23,9 +23,9 @@ function [score, label] = run_12ECG_classifier(data,header_data,classes, model,k
     %% Wavelets Analysis  
 %     Wavelet_Analysis(data,k);
     %% Features extraction
-    [ ecg ] = ecg_noisecancellation(data, 500);
+%     [ P_index, Q_index, R_index, S_index, T_index] = ecg_points( Constructed_Signal, 500 );
     % Use your classifier here to obtain a label and score for each class.
-    features = get_12ECG_features(FilteredData,header_data);
+    features = get_12ECG_features(data,header_data);
     
     %% Signal plot
 %      subplot(5,2,k);

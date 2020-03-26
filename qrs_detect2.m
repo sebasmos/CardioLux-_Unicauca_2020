@@ -1,4 +1,4 @@
-function [qrs_pos,sign,en_thres,bpfecg,q_pos,s_pos] = qrs_detect3(ecg,varargin)
+function [qrs_pos,sign,en_thres] = qrs_detect2(ecg,varargin)
 % QRS detector based on the P&T method. This is an offline implementation
 % of the detector.
 %
@@ -57,14 +57,7 @@ THRES = 0.6;
 fs = 1000; 
 fid_vec = [];
 SIGN_FORCE = [];
-debug = 0;
-
-qrs_pos = [];
-R_t = [];
-R_amp = [];
-hrv = [];
-sign = [];
-en_thres = [];
+debug =0;
 
 switch nargin
     case 1
@@ -140,7 +133,7 @@ try
     b1 = resample(b1,fs,250);
     bpfecg = filtfilt(b1,1,ecg)';
     
-    %if (sum(abs(ecg-median(ecg))>MIN_AMP)/NB_SAMP)>0.05
+    if (sum(abs(ecg-median(ecg))>MIN_AMP)/NB_SAMP)>0.05
         % if 20% of the samples have an absolute amplitude which is higher
         % than MIN_AMP then we are good to go.
         
@@ -174,7 +167,7 @@ try
         poss_reg = mdfint>(THRES*en_thres); 
 
         % in case empty because force threshold and crap in the signal
-        if isempty(poss_reg); poss_reg(10) = 1; end
+        if isempty(poss_reg); poss_reg(10) = 1; end;
 
         % == P&T QRS detection & search back
         if SEARCH_BACK
@@ -243,17 +236,15 @@ try
         R_t = tm(maxloc); % timestamps QRS positions
         R_amp = maxval; % amplitude at QRS positions
         hrv = 60./diff(R_t); % heart rate
-        q_pos = left;
-        s_pos = right;
-%     else
-%         % this is a flat line
-%         qrs_pos = [];
-%         R_t = [];
-%         R_amp = [];
-%         hrv = [];
-%         sign = [];
-%         en_thres = [];
-%     end
+    else
+        % this is a flat line
+        qrs_pos = [];
+        R_t = [];
+        R_amp = [];
+        hrv = [];
+        sign = [];
+        en_thres = [];
+    end
 catch ME
     rethrow(ME);
     for enb=1:length(ME.stack); disp(ME.stack(enb)); end;
@@ -264,18 +255,18 @@ end
 if debug
     figure;
     FONTSIZE = 20;
-    ax(1) = subplot(4,1,1); plot(tm,ecg); hold on;plot(tm,bpfecg,'r')
+    ax(1) = subplot(2,2,1); plot(tm,ecg); hold on;plot(tm,bpfecg,'r')
         title('raw ECG (blue) and zero-pahse FIR filtered ECG (red)'); ylabel('ECG');
         xlim([0 tm(end)]);  hold off;
-    ax(2) = subplot(4,1,2); plot(tm(1:length(mdfint)),mdfint);hold on;
+    ax(2) = subplot(2,2,2); plot(tm(1:length(mdfint)),mdfint);hold on;
         plot(tm,max(mdfint)*bpfecg/(2*max(bpfecg)),'r',tm(left),mdfint(left),'og',tm(right),mdfint(right),'om'); 
         title('Integrated ecg with scan boundaries over scaled ECG');
         ylabel('Int ECG'); xlim([0 tm(end)]); hold off;
-    ax(3) = subplot(4,1,3); plot(tm,bpfecg,'r');hold on;
+    ax(3) = subplot(2,2,3); plot(tm,bpfecg,'r');hold on;
         plot(R_t,R_amp,'+k');
         title('ECG with R-peaks (black) and S-points (green) over ECG')
         ylabel('ECG+R+S'); xlim([0 tm(end)]); hold off;
-    ax(4) = subplot(4,1,4); plot(R_t(1:length(hrv)),hrv,'r+')
+    ax(4) = subplot(2,2,4); plot(R_t(1:length(hrv)),hrv,'r+')
         hold on, title('HR')
         ylabel('RR (s)'); xlim([0 tm(end)]);
     
