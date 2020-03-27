@@ -1,4 +1,4 @@
-function [score, label] = run_12ECG_classifier(data,header_data,classes, model,k)
+function [score, label] = run_12ECG_classifier(data,header_data,classes, model)
 
     num_classes = length(classes);
 
@@ -10,10 +10,7 @@ function [score, label] = run_12ECG_classifier(data,header_data,classes, model,k
     % step 1: 
 %     FilteredData = filtering(data,0.005,55,500,1);
 %     FilteredData = FilteredData';
-        for i =1:12
-              [C,L] = wavedec(data(i,:),3,'sym6');  
-              Constructed_Signal(i,:) = wrcoef('a',C,L,'sym6',3);
-        end
+
     %% Fourier Analysis 
     % Fourier_Analysis(data);
 %      for i=1:12
