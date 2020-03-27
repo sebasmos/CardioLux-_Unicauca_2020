@@ -21,7 +21,27 @@ function features = get_12ECG_features(data, header_data)
                 end
                 % median filter to remove bw
                 for i=1:num_leads
-                        ECG12filt(i,:) = medianfilter(Lead12wGain(i,:)', Fs);
+                    ECG12filt(i,:) = sgolayfilt(Lead12wGain(i,:)',3,25);
+                   %ECG12filt(i,:) = medianfilter(Lead12wGain(i,:)', Fs);
+                 % wavelets without thresholding
+%                [C,L] = wavedec(data(i,:),2,'sym4');  
+                 % approx = appcoef(L,C,'sym4');
+                 % [cd1,cd2,cd3] = detcoef(C,L,[1 2 3]);
+%               Constructed_Signal(i,:) = wrcoef('a',C,L,'sym6',3);
+                %% Denoising wavelet using thresholding and N decom/construnction levels
+                % [C,L] = wavedec(data(i,:),4,'db10'); 
+                % [thr,sorh,keepapp]=ddencmp('den','wv',data(i,:));
+                % A3=wdencmp('gbl',C,L,'db10',4,thr,sorh,keepapp);
+                % Constructed_Signal(i,:) = detrend(A3);
+                %% Denoising stage using Empirical Decomposition Method (EMD)
+%               cleanedSignal = emd_dfadenoising (data);
+%               Constructed_Signal(i,:) = cleanedSignal(i,:)';
+                %% Smoothing using Savitzky	
+                %Constructed_Signal(i,:) = sgolayfilt(data(i,:),3,25);
+                % Denoising stage using moving median smoothing filter
+%                 A3  = movmedian(Araw,11);
+%                 cleanedSignal = detrend(A3);%consider using detrending?
+                       
                 end
 
                 % convert 12Leads to XYZ leads using Kors transformation
@@ -46,8 +66,6 @@ function features = get_12ECG_features(data, header_data)
                 features(1)=age;
                 features(2)=sex;
                 features(3:24)=GEH_features;
-
-
 	catch
 		features = NaN(1,24);
 	end
