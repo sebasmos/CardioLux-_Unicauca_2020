@@ -1,4 +1,4 @@
-function features = get_12ECG_features(data, header_data)
+function features = get_12ECG_features(data, header_data,k)
 
        % addfunction path needed
         addpath(genpath('Tools/'))
@@ -24,11 +24,11 @@ function features = get_12ECG_features(data, header_data)
                    % ECG12filt(i,:) = medianfilter(Lead12wGain(i,:)', Fs);
                       % ECG12filt(i,:) = sgolayfilt(Lead12wGain(i,:)',3,25);
                 %ECG12filt(i,:) = medianfilter(Lead12wGain(i,:)', Fs);
-                % wavelets without thresholding
-                [C,L] = wavedec(Lead12wGain(i,:)',2,'db8');  
-                % approx = appcoef(L,C,'sym4');
-                % [cd1,cd2,cd3] = detcoef(C,L,[1 2 3]);
-               Constructed_Signal(i,:) = wrcoef('a',C,L,'db8',2);
+%                 % wavelets without thresholding
+%                 [C,L] = wavedec(Lead12wGain(i,:)',2,'db4');  
+%                 % approx = appcoef(L,C,'sym4');
+%                 % [cd1,cd2,cd3] = detcoef(C,L,[1 2 3]);
+%                Constructed_Signal(i,:) = wrcoef('a',C,L,'db4',2);
                 %% Denoising wavelet using thresholding and N decom/construnction levels
                  [C,L] = wavedec(Lead12wGain(i,:)',2,'db8'); 
                  [thr,sorh,keepapp]=ddencmp('den','wv',Lead12wGain(i,:)');
