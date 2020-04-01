@@ -1,4 +1,4 @@
-function features = get_12ECG_features(data, header_data)
+function features = get_12ECG_features(data, header_data,k)
 
        % addfunction path needed
         addpath(genpath('Tools/'))
@@ -21,11 +21,33 @@ function features = get_12ECG_features(data, header_data)
 
                 % median filter to remove bw
                 for i=1:num_leads
-                        ECG12filt(i,:) = medianfilter(Lead12wGain(i,:)', Fs);
+                   Constructed_Signal(i,:) = medianfilter(Lead12wGain(i,:)', Fs);
+                      % ECG12filt(i,:) = sgolayfilt(Lead12wGain(i,:)',3,25);
+                %ECG12filt(i,:) = medianfilter(Lead12wGain(i,:)', Fs);
+%                 % wavelets without thresholding
+%                 [C,L] = wavedec(Lead12wGain(i,:)',2,'db4');  
+%                 % approx = appcoef(L,C,'sym4');
+%                 % [cd1,cd2,cd3] = detcoef(C,L,[1 2 3]);
+%                Constructed_Signal(i,:) = wrcoef('a',C,L,'db4',2);
+%                 %% Denoising wavelet using thresholding and N decom/construnction levels
+%                  [C,L] = wavedec(Lead12wGain(i,:)',2,'db8'); 
+%                  [thr,sorh,keepapp]=ddencmp('den','wv',Lead12wGain(i,:)');
+%                  Constructed_Signal(i,:)=wdencmp('gbl',C,L,'db8',2,thr,sorh,keepapp);
+%                  disp('wait')
+                % Constructed_Signal(i,:) = detrend(A3);
+                %% Denoising stage using Empirical Decomposition Method (EMD)
+%               cleanedSignal = emd_dfadenoising (data);
+%               Constructed_Signal(i,:) = cleanedSignal(i,:)';
+                %% Smoothing using Savitzky	
+                %Constructed_Signal(i,:) = sgolayfilt(data(i,:),3,25);
+                % Denoising stage using moving median smoothing filter
+%                 A3  = movmedian(Araw,11);
+%                 cleanedSignal = detrend(A3);%consider using detrending?
+                    
                 end
 
                 % convert 12Leads to XYZ leads using Kors transformation
-                XYZLeads = Kors_git(ECG12filt);
+                XYZLeads = Kors_git(Constructed_Signal);
 
                 VecMag = vecnorm(XYZLeads');
 
