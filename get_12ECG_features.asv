@@ -74,10 +74,11 @@ function features = get_12ECG_features(data, header_data,k)
                 features1  = [features1 a ];
                 end
                 features(1)=age;
-                features(2)=sex;
-                features(3:24)=GEH_features;
+                disp(features)
+                features(2)=sex;disp(features)
+                features(3:24)=GEH_features;disp(features)
                 %12-leads/features per row
-                features(25:109)= features1;
+                features(25:109)= features1;disp(features)
                
 
 	catch

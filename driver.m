@@ -35,7 +35,6 @@ function driver(input_directory, output_directory)
         [current_score,current_label] = run_12ECG_classifier(data,header_data,classes,model,i);
 
         save_challenge_predictions(output_directory,file_tmp{1}, current_score, current_label,classes);
-	
     end
 
 
