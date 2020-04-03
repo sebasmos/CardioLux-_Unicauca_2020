@@ -14,9 +14,11 @@ function features = get_12ECG_features(data, header_data,k)
         HRVparams.windowlength = floor(Total_time);
 
 	try
-
                 for i =1:num_leads
-                        Lead12wGain(i,:) = data(i,:)* gain(i);
+                    Lead12wGain(i,:) = Preprocessing(data(i,:),500,0.5,5);
+                end
+                for i =1:num_leads
+                        Constructed_Signal(i,:) = Lead12wGain(i,:)* gain(i);
                 end
 
 
@@ -24,7 +26,7 @@ function features = get_12ECG_features(data, header_data,k)
                 for i=1:num_leads
                   
                     %Constructed_Signal(i,:) = medianfilter(Lead12wGain(i,:)', Fs);
-                     Constructed_Signal(i,:) = Preprocessing(Lead12wGain(i,:),500,0.5,5);
+%                      Constructed_Signal(i,:) = Preprocessing(Lead12wGain(i,:),500,0.5,5)
                                   
                       % ECG12filt(i,:) = sgolayfilt(Lead12wGain(i,:)',3,25);
                 %ECG12filt(i,:) = medianfilter(Lead12wGain(i,:)', Fs);

@@ -31,7 +31,7 @@ function [score, label] = run_12ECG_classifier(data,header_data,classes, model,k
 %           title(['Recording ',num2str(k)])
 %      end
     %% end signal plot
-    SaveToExcel(k,features)
+%     SaveToExcel(k,features)
     score = 0;
    % score = mnrval(model,features);		
     [~,idx] = max (score);
