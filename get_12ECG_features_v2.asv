@@ -135,7 +135,7 @@ function SelectedFeat = get_12ECG_features_v2(data, header_data,k)
                 SelectedFeat(37) = features(98);
                 SelectedFeat(38) = features(100);
                 SelectedFeat(39) = features(105);
-                SelectedFeat(40) = features(107);
+                SelectedFeat(30) = features(107);
                 
                 
                 SelectedFeat(41) = features(131);
@@ -147,7 +147,7 @@ function SelectedFeat = get_12ECG_features_v2(data, header_data,k)
                 SelectedFeat(47) = features(212);
                 SelectedFeat(48) = features(218);
                 SelectedFeat(49) = features(223);
-                SelectedFeat(50) = features(227);
+                SelectedFeat(40) = features(227);
                 
                 
                 SelectedFeat(51) = features(228);
@@ -163,7 +163,7 @@ function SelectedFeat = get_12ECG_features_v2(data, header_data,k)
                 SelectedFeat(59) = features(301);
 
 	catch
-		SelectedFeat = NaN(1,59);
+		features = NaN(1,59);
 	end
 
 end
