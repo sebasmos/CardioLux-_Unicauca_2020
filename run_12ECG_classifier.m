@@ -22,7 +22,10 @@ function [score, label] = run_12ECG_classifier(data,header_data,classes, model,k
     %% Features extraction
 %     [ P_index, Q_index, R_index, S_index, T_index] = ecg_points( Constructed_Signal, 500 );
     % Use your classifier here to obtain a label and score for each class.
-    features = get_12ECG_features(data,header_data);
+    % Use your classifier here to obtain a label and score for each class.
+    features = get_12ECG_features_v2(data,header_data);
+    features_58 = features(1,1:58);
+    class = features(1,59);
     
     %% Signal plot
 %      subplot(5,2,k);
@@ -31,12 +34,9 @@ function [score, label] = run_12ECG_classifier(data,header_data,classes, model,k
 %           title(['Recording ',num2str(k)])
 %      end
     %% end signal plot
-    
-    SaveToExcel(k,features)
-    score = 0;
-    %score = mnrval(model,features);		
+   % SaveToExcel(k,features(301));
+  %  score = 0;
+    score = mnrval(model,features_58);		
     [~,idx] = max (score);
     label(idx)=1;
-
-    SaveToExcel(k,features)
 end
