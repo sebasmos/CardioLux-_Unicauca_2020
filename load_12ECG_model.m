@@ -8,7 +8,6 @@ function model = load_12ECG_model()
         filename = 'Linear_Regression_Model_58_feat.mat';
         A=load(filename);
         model=A.B;
-
 end
 
 

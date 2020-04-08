@@ -23,11 +23,11 @@ function SelectedFeat = get_12ECG_features_v2(data, header_data,k)
                 % median filter to remove bw
                 for i=1:num_leads
                   
-                  Constructed_Signal(i,:) = medianfilter(Lead12wGain(i,:)', Fs);
+                   Constructed_Signal(i,:) = medianfilter(Lead12wGain(i,:)', Fs);
 %                 Constructed_Signal(i,:) = Preprocessing(Lead12wGain(i,:),500,0.5,5);
                                   
-%                       Constructed_Signal(i,:) = sgolayfilt(Lead12wGain(i,:)',3,25);
-                %ECG12filt(i,:) = medianfilter(Lead12wGain(i,:)', Fs);
+%                  Constructed_Signal(i,:) = sgolayfilt(Lead12wGain(i,:)',3,11);
+                 %ECG12filt(i,:) = medianfilter(Lead12wGain(i,:)', Fs);
 %                 % wavelets without thresholding
 %                 [C,L] = wavedec(Lead12wGain(i,:)',2,'db4');  
 %                 % approx = appcoef(L,C,'sym4');
@@ -36,9 +36,9 @@ function SelectedFeat = get_12ECG_features_v2(data, header_data,k)
 %                 %% Denoising wavelet using thresholding and N decom/construnction levels
 %                  [C,L] = wavedec(Lead12wGain(i,:)',2,'db8'); 
 %                  [thr,sorh,keepapp]=ddencmp('den','wv',Lead12wGain(i,:)');
-%                  Constructed_Signal(i,:)=wdencmp('gbl',C,L,'db8',2,thr,sorh,keepapp);
+%                  A3(i,:)=wdencmp('gbl',C,L,'db8',2,thr,sorh,keepapp);
 %                  disp('wait')
-                % Constructed_Signal(i,:) = detrend(A3);
+%                  Constructed_Signal(i,:) = detrend(A3);
                 %% Denoising stage using Empirical Decomposition Method (EMD)
 %               cleanedSignal = emd_dfadenoising (data);
 %               Constructed_Signal(i,:) = cleanedSignal(i,:)';
