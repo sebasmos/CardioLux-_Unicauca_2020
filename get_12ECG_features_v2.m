@@ -7,7 +7,7 @@ function SelectedFeat = get_12ECG_features_v2(data, header_data,k)
 
 	% read number of leads, sample frequency and gain from the header.	
 
-	[recording,Total_time,num_leads,Fs,gain,age,sex,dx]=extract_data_from_header(header_data);
+	[recording,Total_time,num_leads,Fs,gain,age,sex]=extract_data_from_header(header_data);
 
         HRVparams.Fs=Fs;
         HRVparams.PeakDetect.windows = floor(Total_time-1);
@@ -22,11 +22,10 @@ function SelectedFeat = get_12ECG_features_v2(data, header_data,k)
 
                 % median filter to remove bw
                 for i=1:num_leads
-                  
-                   Constructed_Signal(i,:) = medianfilter(Lead12wGain(i,:)', Fs);
+                    Constructed_Signal(i,:) = medianfilter(Lead12wGain(i,:)', Fs);
 %                 Constructed_Signal(i,:) = Preprocessing(Lead12wGain(i,:),500,0.5,5);
                                   
-%                  Constructed_Signal(i,:) = sgolayfilt(Lead12wGain(i,:)',3,11);
+%                   Constructed_Signal(i,:) = sgolayfilt(Lead12wGain(i,:)',3,11);
                  %ECG12filt(i,:) = medianfilter(Lead12wGain(i,:)', Fs);
 %                 % wavelets without thresholding
 %                 [C,L] = wavedec(Lead12wGain(i,:)',2,'db4');  
@@ -91,7 +90,6 @@ function SelectedFeat = get_12ECG_features_v2(data, header_data,k)
                 features(25:108)= features1;
                 %12-leads/AF features
                 features(109:300) = features2;
-                features(301)=dx;
                 %% Feature Selection
                 SelectedFeat(1:2)= features(1:2);
                 SelectedFeat(3) = features(4);
@@ -158,12 +156,9 @@ function SelectedFeat = get_12ECG_features_v2(data, header_data,k)
                 SelectedFeat(56) = features(249);
                 SelectedFeat(57) = features(253);
                 SelectedFeat(58) = features(265);
-                
-                % Class for 
-                SelectedFeat(59) = features(301);
-
+               
 	catch
-		SelectedFeat = NaN(1,59);
+		SelectedFeat = NaN(1,58);
 	end
 
 end
